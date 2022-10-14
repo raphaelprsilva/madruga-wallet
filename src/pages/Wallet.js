@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Layout from '../components/Layout';
 
-class Wallet extends React.Component {
+class Wallet extends Component {
   render() {
-    return <div>TrybeWallet</div>;
+    return <Layout>TrybeWallet</Layout>;
   }
 }
 
