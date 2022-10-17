@@ -1,30 +1,55 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchCurrencies, addExpenses } from '../../actions';
+
+import { fetchCurrencies, addExpenses, editExpense } from '../../actions';
 import fetchCurrenciesAPI from '../../data/API';
 
 const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
 const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 
+const INITIAL_STATE = {
+  id: 0,
+  value: '',
+  description: '',
+  currency: 'USD',
+  method: 'Dinheiro',
+  tag: 'Lazer',
+};
+
 class WalletForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      id: 0,
-      value: '',
-      description: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Lazer',
-    };
+    this.state = INITIAL_STATE;
   }
 
   componentDidMount() {
     const { fetchCurrencies: fetchCurrenciesAction } = this.props;
     fetchCurrenciesAction();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { isEditing } = this.props;
+    if (prevProps.isEditing !== isEditing && isEditing) {
+      this.updateFormState();
+    }
+  }
+
+  resetFormState = () => {
+    this.setState(INITIAL_STATE);
+  };
+
+  updateFormState = () => {
+    const { expenseToUpdate } = this.props;
+    this.setState({
+      value: expenseToUpdate.value,
+      description: expenseToUpdate.description,
+      currency: expenseToUpdate.currency,
+      method: expenseToUpdate.method,
+      tag: expenseToUpdate.tag,
+    });
   }
 
   handleChange = ({ target: { name, value } }) => {
@@ -35,32 +60,50 @@ class WalletForm extends Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    const { addExpenses: addExpenseAction } = this.props;
+    const {
+      isEditing,
+      addExpenses: addExpenseAction,
+      editExpense: editExpenseAction,
+      expenseToUpdate,
+    } = this.props;
     const { id, value, description, currency, method, tag } = this.state;
-    const newExpense = {
-      id,
-      value,
-      description,
-      currency,
-      method,
-      tag,
-      exchangeRates: await fetchCurrenciesAPI(),
-    };
 
-    addExpenseAction(newExpense);
-    this.setState({
-      id: id + 1,
-      value: '',
-      description: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Lazer',
-    });
+    if (isEditing) {
+      const editedExpense = {
+        value,
+        description,
+        currency,
+        method,
+        tag,
+      };
+      editExpenseAction(expenseToUpdate.id, editedExpense);
+      this.resetFormState();
+    } else {
+      const newExpense = {
+        id,
+        value,
+        description,
+        currency,
+        method,
+        tag,
+        exchangeRates: await fetchCurrenciesAPI(),
+      };
+
+      addExpenseAction(newExpense);
+      this.setState({
+        id: id + 1,
+        value: '',
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Lazer',
+      });
+    }
   };
 
   render() {
     const { value, description } = this.state;
-    const { currencies, isFetching } = this.props;
+    const { currencies, isFetching, isEditing } = this.props;
 
     return isFetching ? (
       <p>Loading...</p>
@@ -133,27 +176,48 @@ class WalletForm extends Component {
             ))}
           </select>
         </label>
-        <button type="submit">Adicionar despesa</button>
+        <button type="submit">
+          {!isEditing ? 'Adicionar despesa' : 'Editar despesa'}
+        </button>
       </form>
     );
   }
 }
 
+WalletForm.defaultProps = {
+  isEditing: false,
+  expenseToUpdate: {},
+};
+
 WalletForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
   addExpenses: PropTypes.func.isRequired,
+  editExpense: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  isEditing: PropTypes.bool,
+  expenseToUpdate: PropTypes.shape({
+    id: PropTypes.number,
+    value: PropTypes.string,
+    description: PropTypes.string,
+    currency: PropTypes.string,
+    method: PropTypes.string,
+    tag: PropTypes.string,
+  }),
 };
 
 const mapStateToProps = (state) => ({
   isFetching: state.wallet.isFetching,
+  expenses: state.wallet.expenses,
   currencies: state.wallet.currencies,
+  isEditing: state.wallet.isEditing,
+  expenseToUpdate: state.wallet.expenseToUpdate,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: () => dispatch(fetchCurrencies()),
   addExpenses: (expense) => dispatch(addExpenses(expense)),
+  editExpense: (id, expense) => dispatch(editExpense(id, expense)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);

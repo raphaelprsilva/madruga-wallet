@@ -6,6 +6,8 @@ export const GET_CURRENCIES = 'GET_CURRENCIES';
 export const FAILED_REQUEST_CURRENCIES = 'FAILED_REQUEST_CURRENCIES';
 export const ADD_EXPENSES = 'ADD_EXPENSES';
 export const DELETE_EXPENSES = 'DELETE_EXPENSES';
+export const ENTER_EDIT_MODE = 'ENTER_EDIT_MODE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 
 export const login = (email) => ({
   type: DO_LOGIN,
@@ -48,4 +50,15 @@ export const addExpenses = (expense) => ({
 export const deleteExpense = (id) => ({
   type: DELETE_EXPENSES,
   id,
+});
+
+export const enterEditMode = (id) => ({
+  type: ENTER_EDIT_MODE,
+  id,
+});
+
+export const editExpense = (id, expense) => ({
+  type: EDIT_EXPENSE,
+  id,
+  expense,
 });

@@ -3,11 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import convertToNumberAndRound from '../../utils/stringToNumber';
-import { deleteExpense } from '../../actions';
+import { deleteExpense, enterEditMode } from '../../actions';
 
 class WalletTable extends Component {
   render() {
-    const { expenses, deleteExpense: deleteExpenseAction } = this.props;
+    const {
+      expenses,
+      deleteExpense: deleteExpenseAction,
+      enterEditMode: enterEditModeAction,
+    } = this.props;
 
     return (
       <table>
@@ -48,7 +52,13 @@ class WalletTable extends Component {
                 </td>
                 <td>Real</td>
                 <td>
-                  <button type="button">Editar</button>
+                  <button
+                    type="button"
+                    data-testid="edit-btn"
+                    onClick={ () => enterEditModeAction(id) }
+                  >
+                    Editar
+                  </button>
                   <button
                     type="button"
                     data-testid="delete-btn"
@@ -69,6 +79,7 @@ class WalletTable extends Component {
 WalletTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   deleteExpense: PropTypes.func.isRequired,
+  enterEditMode: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -77,6 +88,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   deleteExpense: (id) => dispatch(deleteExpense(id)),
+  enterEditMode: (id) => dispatch(enterEditMode(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletTable);
