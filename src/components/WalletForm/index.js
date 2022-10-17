@@ -38,7 +38,16 @@ class WalletForm extends Component {
   }
 
   resetFormState = () => {
-    this.setState(INITIAL_STATE);
+    const { expenses } = this.props;
+    const expensesLength = expenses.length;
+    this.setState({
+      id: expensesLength > 0 ? expenses[expensesLength - 1].id + 1 : 0,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Lazer',
+    });
   };
 
   updateFormState = () => {
@@ -90,14 +99,7 @@ class WalletForm extends Component {
       };
 
       addExpenseAction(newExpense);
-      this.setState({
-        id: id + 1,
-        value: '',
-        description: '',
-        currency: 'USD',
-        method: 'Dinheiro',
-        tag: 'Lazer',
-      });
+      this.resetFormState();
     }
   };
 
@@ -191,6 +193,7 @@ WalletForm.defaultProps = {
 
 WalletForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
   addExpenses: PropTypes.func.isRequired,
   editExpense: PropTypes.func.isRequired,
