@@ -79,7 +79,7 @@ class LoginForm extends Component {
     const { email } = this.state;
     login(email);
     history.push('/carteira');
-  }
+  };
 
   render() {
     const {
@@ -105,7 +105,7 @@ class LoginForm extends Component {
         </label>
         {emailError && <span>Email inválido</span>}
         <label htmlFor="password">
-          Password
+          Senha
           <input
             data-testid="password-input"
             type="password"
