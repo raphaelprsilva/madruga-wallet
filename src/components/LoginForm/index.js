@@ -1,8 +1,11 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { login as loginAction } from '../../actions';
+
+import * as S from './styled';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -91,35 +94,40 @@ class LoginForm extends Component {
     } = this.state;
 
     return (
-      <form onSubmit={ this.doLogin }>
-        <label htmlFor="email">
-          Email
-          <input
-            data-testid="email-input"
-            type="email"
-            name="email"
-            value={ email }
-            id="email"
-            onChange={ this.handleChange }
-          />
-        </label>
-        {emailError && <span>Email inválido</span>}
-        <label htmlFor="password">
-          Senha
-          <input
-            data-testid="password-input"
-            type="password"
-            name="password"
-            value={ password }
-            id="password"
-            onChange={ this.handleChange }
-          />
-        </label>
-        {passwordError && <span>Senha inválida</span>}
-        <button type="submit" disabled={ isSubmitButtonDisabled }>
+      <S.FormWrapper onSubmit={ this.doLogin }>
+        <S.InputWrapper>
+          <label htmlFor="email">E-mail</label>
+          <div>
+            <input
+              data-testid="email-input"
+              placeholder="madruga@email.com"
+              type="email"
+              name="email"
+              value={ email }
+              id="email"
+              onChange={ this.handleChange }
+            />
+          </div>
+          {emailError && <span>Email inválido</span>}
+        </S.InputWrapper>
+        <S.InputWrapper>
+          <label htmlFor="password">Senha</label>
+          <div>
+            <input
+              data-testid="password-input"
+              type="password"
+              name="password"
+              value={ password }
+              id="password"
+              onChange={ this.handleChange }
+            />
+          </div>
+          {passwordError && <span>Senha inválida</span>}
+        </S.InputWrapper>
+        <S.ButtonWrapper type="submit" disabled={ isSubmitButtonDisabled }>
           Entrar
-        </button>
-      </form>
+        </S.ButtonWrapper>
+      </S.FormWrapper>
     );
   }
 }

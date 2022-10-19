@@ -93,8 +93,10 @@ const GlobalStyles = createGlobalStyle`
     --contrast2: #9644b3;
     --contrast3: #582869;
     --borders: #dedede;
+    --borderFocus: #a3a0a0;
     --postColor: #111111;
     --texts: #555555;
+    --disabled: #807c7a;
     --gray: #2a2a2a;
     --highlight: #f73859;
     --hover: #32969c;
