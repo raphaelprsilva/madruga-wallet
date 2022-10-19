@@ -7,9 +7,11 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store';
+import GlobalStyles from './styles/global';
 
 ReactDOM.render(
   <BrowserRouter>
+    <GlobalStyles />
     <Provider store={ store }>
       <App />
     </Provider>
