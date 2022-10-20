@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import * as S from './styled';
+import MadrugaLogoWhite from '../../assets/images/madruga-wallet-white-logo.svg';
+
 class Header extends Component {
   getTotalExpenses = () => {
     const { expenses } = this.props;
@@ -17,23 +20,23 @@ class Header extends Component {
     const totalExpenses = this.getTotalExpenses();
 
     return (
-      <header>
-        <h1>MadrugaWallet</h1>
-        <div>
-          <div>
-            <span>Email: </span>
-            <span data-testid="email-field">{email}</span>
-          </div>
-          <div>
-            <span>Total: </span>
+      <S.HeaderWrapper>
+        <img src={ MadrugaLogoWhite } alt="Logomarca da Madruga Wallet" />
+        <S.UserDataWrapper>
+          <S.UserDataWrapperItem>
+            <span>Email</span>
+            <span data-testid="email-field" title={ email }>{email}</span>
+          </S.UserDataWrapperItem>
+          <S.UserDataWrapperItem>
+            <span>Total</span>
             <span data-testid="total-field">{totalExpenses}</span>
-          </div>
-          <div>
-            <span>Moeda: </span>
+          </S.UserDataWrapperItem>
+          <S.UserDataWrapperItem>
+            <span>Moeda</span>
             <span data-testid="header-currency-field">BRL</span>
-          </div>
-        </div>
-      </header>
+          </S.UserDataWrapperItem>
+        </S.UserDataWrapper>
+      </S.HeaderWrapper>
     );
   }
 }
