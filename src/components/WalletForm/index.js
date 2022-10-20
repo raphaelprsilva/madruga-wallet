@@ -1,9 +1,11 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { fetchCurrencies, addExpenses, editExpense } from '../../actions';
 import fetchCurrenciesAPI from '../../data/API';
+import * as S from './styled';
 
 const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
@@ -110,31 +112,35 @@ class WalletForm extends Component {
     return isFetching ? (
       <p>Loading...</p>
     ) : (
-      <form onSubmit={ this.handleSubmit }>
-        <label htmlFor="value">
-          Valor
-          <input
-            type="number"
-            name="value"
-            id="value"
-            data-testid="value-input"
-            value={ value }
-            onChange={ this.handleChange }
-          />
-        </label>
-        <label htmlFor="description">
-          Descrição
-          <input
-            type="text"
-            name="description"
-            id="description"
-            data-testid="description-input"
-            value={ description }
-            onChange={ this.handleChange }
-          />
-        </label>
-        <label htmlFor="currency">
-          Moeda
+      <S.FormWrapper onSubmit={ this.handleSubmit }>
+        <S.InputWrapper>
+          <label htmlFor="value">Valor</label>
+          <div>
+            <input
+              type="number"
+              name="value"
+              id="value"
+              data-testid="value-input"
+              value={ value }
+              onChange={ this.handleChange }
+            />
+          </div>
+        </S.InputWrapper>
+        <S.InputWrapper>
+          <label htmlFor="description">Descrição</label>
+          <div>
+            <input
+              type="text"
+              name="description"
+              id="description"
+              data-testid="description-input"
+              value={ description }
+              onChange={ this.handleChange }
+            />
+          </div>
+        </S.InputWrapper>
+        <S.SelectWrapper>
+          <label htmlFor="currency">Moeda</label>
           <select
             name="currency"
             id="currency"
@@ -147,9 +153,9 @@ class WalletForm extends Component {
               </option>
             ))}
           </select>
-        </label>
-        <label htmlFor="method">
-          Método de pagamento
+        </S.SelectWrapper>
+        <S.SelectWrapper>
+          <label htmlFor="method">Método de pagamento</label>
           <select
             name="method"
             id="method"
@@ -162,9 +168,9 @@ class WalletForm extends Component {
               </option>
             ))}
           </select>
-        </label>
-        <label htmlFor="tag">
-          Tag
+        </S.SelectWrapper>
+        <S.SelectWrapper>
+          <label htmlFor="tag">Tag</label>
           <select
             name="tag"
             id="tag"
@@ -177,11 +183,11 @@ class WalletForm extends Component {
               </option>
             ))}
           </select>
-        </label>
-        <button type="submit">
+        </S.SelectWrapper>
+        <S.ButtonWrapper type="submit">
           {!isEditing ? 'Adicionar despesa' : 'Editar despesa'}
-        </button>
-      </form>
+        </S.ButtonWrapper>
+      </S.FormWrapper>
     );
   }
 }
