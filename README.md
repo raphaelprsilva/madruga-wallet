@@ -67,7 +67,7 @@ Comandos para clonar o projeto na sua máquina:
 
 ```bash
 # Clone este repositório com o comando:
-git clone ssh-do-projeto
+git clone git@github.com:raphaelprsilva/madruga-wallet.git
 
 # Acesse a pasta do projeto no terminal/cmd com o comando:
 cd nome-do-projeto
