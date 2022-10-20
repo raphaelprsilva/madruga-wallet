@@ -93,7 +93,7 @@ O projeto se encontra finalizado!
 
 Se quiser ao invés de clonar o projeto e rodar localmente, você deseje ver o mesmo online, basta clicar no link abaixo:
 
-<a href="https://www.madruga-wallet.elraphael.com.br" target="_blank" rel="noopener">Madruga Wallet</a>
+<a href="http://www.madruga-wallet.elraphael.com.br/" target="_blank" rel="noopener">Madruga Wallet</a>
 
 ## 🤝 Colaboradores
 
