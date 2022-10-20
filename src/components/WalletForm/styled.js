@@ -24,6 +24,7 @@ export const FormWrapper = styled.form`
     height: 315px;
     align-items: start;
     margin: 1rem 0;
+    width: 100%;
   `}
 
   input {
