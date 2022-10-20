@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import media from 'styled-media-query';
+import { ButtonWrapper } from '../WalletForm/styled';
 
 export const TableWrapper = styled.div`
   ${media.lessThan('medium')`
@@ -26,6 +27,10 @@ export const TableHead = styled.thead`
     border: 1px solid var(--borders);
     padding: 8px;
   }
+
+  th:last-child {
+    width: 175px;
+  }
 `;
 
 export const TableRow = styled.tr`
@@ -43,11 +48,35 @@ export const TableRow = styled.tr`
   :hover {
     background-color: #ddd;
   }
+
+  td:last-child {
+    display: flex;
+    justify-content: space-between;
+    border: none;
+  }
 `;
 
 export const TableData = styled.tbody`
   td {
     border: 1px solid #ddd;
     padding: 8px;
+  }
+`;
+
+export const TableEditButton = styled(ButtonWrapper)`
+  width: 70px;
+  background-color: #B39644;
+
+  :hover {
+    background-color: #8F7836;
+  }
+`;
+
+export const TableDeleteButton = styled(ButtonWrapper)`
+  width: 70px;
+  background-color: #44B396;
+
+  :hover {
+    background-color: #368F78;
   }
 `;

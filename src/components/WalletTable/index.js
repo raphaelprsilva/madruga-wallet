@@ -55,20 +55,20 @@ class WalletTable extends Component {
                   </td>
                   <td>Real</td>
                   <td>
-                    <button
+                    <S.TableEditButton
                       type="button"
                       data-testid="edit-btn"
                       onClick={ () => enterEditModeAction(id) }
                     >
                       Editar
-                    </button>
-                    <button
+                    </S.TableEditButton>
+                    <S.TableDeleteButton
                       type="button"
                       data-testid="delete-btn"
                       onClick={ () => deleteExpenseAction(id) }
                     >
                       Excluir
-                    </button>
+                    </S.TableDeleteButton>
                   </td>
                 </S.TableRow>
               );
