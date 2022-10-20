@@ -18,6 +18,7 @@ const INITIAL_STATE = {
   currency: 'USD',
   method: 'Dinheiro',
   tag: 'Lazer',
+  isDisabled: true,
 };
 
 class WalletForm extends Component {
@@ -49,6 +50,7 @@ class WalletForm extends Component {
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Lazer',
+      isDisabled: true,
     });
   };
 
@@ -66,7 +68,20 @@ class WalletForm extends Component {
   handleChange = ({ target: { name, value } }) => {
     this.setState({
       [name]: value,
-    });
+    }, () => this.validateForm());
+  };
+
+  validateForm = () => {
+    const { value, description, currency, method, tag } = this.state;
+    if (value && description && currency && method && tag) {
+      this.setState({
+        isDisabled: false,
+      });
+    } else {
+      this.setState({
+        isDisabled: true,
+      });
+    }
   };
 
   handleSubmit = async (event) => {
@@ -106,7 +121,7 @@ class WalletForm extends Component {
   };
 
   render() {
-    const { value, description } = this.state;
+    const { value, description, isDisabled } = this.state;
     const { currencies, isFetching, isEditing } = this.props;
 
     return isFetching ? (
@@ -184,7 +199,7 @@ class WalletForm extends Component {
             ))}
           </select>
         </S.SelectWrapper>
-        <S.ButtonWrapper type="submit">
+        <S.ButtonWrapper type="submit" disabled={ isDisabled }>
           {!isEditing ? 'Adicionar despesa' : 'Editar despesa'}
         </S.ButtonWrapper>
       </S.FormWrapper>
