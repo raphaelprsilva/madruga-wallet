@@ -1,4 +1,6 @@
-![teste](./src/assets/images/madruga-wallet-black-logo.svg)
+<div align="center">
+  <img src="./src/assets/images/madruga-wallet-black-logo.svg" alt="madruga wallet" />
+</div>
 
 ---
 
